@@ -1,0 +1,14 @@
+uuid: bd83f78f-ac9c-437f-8dbe-db4cdbf1287d
+name: 'Drupal 8'
+mail: gedvan@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: pt-br
+default_langcode: pt-br
+_core:
+  default_config_hash: yTxtFqBHnEWxQswuWvkjE8mKw2t8oKuCL1q8KnfHuGE
