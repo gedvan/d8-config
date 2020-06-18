@@ -1,0 +1,19 @@
+
+# Root vendor directory
+/vendor/
+
+# Drupal dependencies managed by Composer
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+
+# Settings (local only)
+/web/sites/*/settings.local.php
+
+# Files directory
+/web/sites/*/files/
+
+# IDE's generated files
+/.idea/
