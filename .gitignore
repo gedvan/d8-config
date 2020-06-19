@@ -9,6 +9,31 @@
 /web/profiles/contrib/
 /web/libraries/
 
+# Drupal scaffold files
+/web/.csslintrc
+/web/.eslintignore
+/web/.eslintrc.json
+/web/.ht.router.php
+/web/.htaccess
+/web/example.gitignore
+/web/autoload.php
+/web/index.php
+/web/INSTALL.txt
+/web/README.txt
+/web/robots.txt
+/web/update.php
+/web/web.config
+/web/sites/README.txt
+/web/sites/development.services.yml
+/web/sites/example.settings.local.php
+/web/sites/example.sites.php
+/web/sites/default/settings.php
+/web/sites/default/default.services.yml
+/web/sites/default/default.settings.php
+/web/modules/README.txt
+/web/profiles/README.txt
+/web/themes/README.txt
+
 # Settings (local only)
 /web/sites/*/settings.local.php
 
