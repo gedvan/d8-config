@@ -56,7 +56,7 @@ $settings['trusted_host_patterns'] = [
 ];
 ~~~
 
-To enable development settings, you may copy `web/sites/example.settings.local.php` and change db info.
+To enable development settings, you may copy `web/sites/example.settings.local.php` and add the above settings to the end.
 
 6\. Create and setup permissions for files folder
 
