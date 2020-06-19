@@ -2,39 +2,48 @@
 
 Drupal 8's configuration management experiments.
 
-## Deploy inicial
+## Dependencies
 
-1\. Clonar o repositório
+- Apache 2+
+- PHP 7.3+
+- Mysql 5+
+- Composer (https://getcomposer.org/)
+- Drush launcher (https://github.com/drush-ops/drush-launcher)
+
+## Setup localhost
+
+1\. Clone the repository
 
 ~~~
 $ git clone git@github.com:gedvan/d8-config.git dir
 ~~~
 
-2\. Instalar as dependências
+2\. Install Composer dependencies
 
 ~~~
 $ cd dir
 $ composer install
 ~~~
 
-3\. Criar um banco de dados (MySQL) para o projeto
+3\. Create a MySQL database
 
-4\. Carregar o dump inicial
+4\. Load the initial database dump
 
 ~~~
-$ mysql -h [host] -u [user] -p[pass] [dbname] < config/initial-schema.sql
+$ mysql -u [dbuser] -p[dbpass] [dbname] < config/initdb.sql
 ~~~
 
-5\. Criar arquivo de configuração local em `web/sites/default/settings.local.php`
-com as informações específicas do ambiente.
+5\. Create local settings file at `web/sites/default/settings.local.php`
+
+The minimum settings are:
 
 ~~~
 <?php
 
 $databases['default']['default'] = [
-  'database' => '',
-  'username' => '',
-  'password' => '',
+  'database' => '[dbname]',
+  'username' => '[dbuser]',
+  'password' => '[dbpass]',
   'prefix' => '',
   'host' => 'localhost',
   'port' => '3306',
@@ -47,19 +56,77 @@ $settings['trusted_host_patterns'] = [
 ];
 ~~~
 
-**Nota:** Para ambiente de desenvolvimento, pode-se utilizar o `web/sites/example.settings.local.php`
-como modelo e adicionar as demais configurações no final.
+To enable development settings, you may copy `web/sites/example.settings.local.php` and change db info.
 
-6\. Criar e configurar as permissões da pasta files
+6\. Create and setup permissions for files folder
 
 ~~~
 $ mkdir web/sites/default/files
 $ chmod a+w web/sites/default/files/
 ~~~
 
-7\. Importar a configuração
+7\. Import current configuration
 
 ~~~
-$ cd web
 $ drush cim
 ~~~
+
+8\. Setup web server (alias, virtualhost, etc.)
+
+## Development workflow
+
+### Start a development cycle
+
+1\. Get the latest code from repository
+
+~~~
+$ git pull
+~~~
+
+2\. Install Composer dependencies
+
+~~~
+$ composer install
+~~~
+
+3\. Run database updates
+
+~~~
+$ drush updb
+~~~
+
+4\. Clean cache and import configuration
+
+~~~
+$ drush cr
+$ drush cim
+~~~
+
+### Pushing your work
+
+1\. Export your configuration changes
+
+~~~
+$ drush cex
+~~~
+
+2\. Commit and push
+
+~~~
+$ git add .
+$ git commit -m "Commit message"
+$ git push [remote] [branch]
+~~~
+
+## Important folders
+
+- `config/sync`: where the site configuration is imported from/exported to
+- `vendor`: where Composer downloads non-Drupal specific packages
+- `web`: Drupal root (must be the web server document root)
+- `web/core`: Drupal core
+- `web/modules/contrib`: where Composer downloads Drupal modules
+- `web/modules/custom`: where custom modules should be created
+- `web/themes/contrib`: where Composer downloads Drupal themes
+- `web/themes/custom`: where custom themes should be created
+- `web/libraries`: where external libraries should be placed
+- `web/sites/default/files`: Drupal's public files folder
