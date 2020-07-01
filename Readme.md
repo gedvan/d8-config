@@ -10,17 +10,49 @@ Drupal 8's configuration management experiments.
 - Composer (https://getcomposer.org/)
 - Drush launcher (https://github.com/drush-ops/drush-launcher)
 
+Or you may use [Lando](https://lando.dev/) for development.
+
 ## Setup localhost
+
+### With Lando
 
 1\. Clone the repository
 
-~~~
+~~~shell script
 $ git clone git@github.com:gedvan/d8-config.git dir
+$ cd dir
+~~~
+
+2\. Lando start
+
+~~~shell script
+$ lando start
+~~~
+
+3\. Import initial database
+
+~~~shell script
+$ lando db-import config/initdb.sql
+~~~
+
+4\. Import current configuration
+
+~~~shell script
+$ lando drush cim
+~~~
+
+### Manual setup
+
+1\. Clone the repository
+
+~~~shell script
+$ git clone git@github.com:gedvan/d8-config.git dir
+$ cd dir
 ~~~
 
 2\. Install Composer dependencies
 
-~~~
+~~~shell script
 $ cd dir
 $ composer install
 ~~~
@@ -29,7 +61,7 @@ $ composer install
 
 4\. Load the initial database dump
 
-~~~
+~~~shell script
 $ mysql -u [dbuser] -p[dbpass] [dbname] < config/initdb.sql
 ~~~
 
@@ -37,7 +69,7 @@ $ mysql -u [dbuser] -p[dbpass] [dbname] < config/initdb.sql
 
 The minimum settings are:
 
-~~~
+~~~php
 <?php
 
 $databases['default']['default'] = [
@@ -60,14 +92,14 @@ To enable development settings, you may copy `web/sites/example.settings.local.p
 
 6\. Create and setup permissions for files folder
 
-~~~
+~~~shell script
 $ mkdir web/sites/default/files
 $ chmod a+w web/sites/default/files/
 ~~~
 
 7\. Import current configuration
 
-~~~
+~~~shell script
 $ drush cim
 ~~~
 
@@ -79,40 +111,49 @@ $ drush cim
 
 1\. Get the latest code from repository
 
-~~~
+~~~shell script
 $ git pull
 ~~~
 
 2\. Install Composer dependencies
 
-~~~
+~~~shell script
 $ composer install
 ~~~
 
 3\. Run database updates
 
-~~~
+~~~shell script
 $ drush updb
 ~~~
 
 4\. Clean cache and import configuration
 
-~~~
+~~~shell script
 $ drush cr
 $ drush cim
+~~~
+
+To run composer and drush commands with Lando, just call them after `lando` command. E.g.:
+
+~~~shell script
+$ lando composer install
+$ lando drush updb
+$ lando drush cr
+$ lando drush cim
 ~~~
 
 ### Pushing your work
 
 1\. Export your configuration changes
 
-~~~
-$ drush cex
+~~~shell script
+$ drush cex   # or: lando drush cex
 ~~~
 
 2\. Commit and push
 
-~~~
+~~~shell script
 $ git add .
 $ git commit -m "Commit message"
 $ git push [remote] [branch]

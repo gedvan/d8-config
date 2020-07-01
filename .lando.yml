@@ -1,0 +1,14 @@
+name: d8-config
+recipe: drupal8
+config:
+  webroot: web
+  php: '7.3'
+  via: apache
+  database: mysql
+  drush: "*"
+  xdebug: false
+services:
+  appserver:
+    build:
+      - composer install
+      - cp config/lando/settings.local.php web/sites/default
